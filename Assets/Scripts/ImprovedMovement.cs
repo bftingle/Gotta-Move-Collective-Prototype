@@ -33,11 +33,16 @@ public class ImprovedMovement : Movement {
 
     public int side = 1;
 
+    //Saved directional variables for consistent dashing
     private float xRawSaved = 1.0f;
     private float yRawSaved = 0.0f;
 
+    //Buffers for Coyote Time and Jumping
     private int coyoteBuffer = 0;
     private int jumpBuffer = 0;
+
+    //Saved X for walk response
+    public float prevXInput = 0;
 
     [Space]
     [Header("Polish")]
@@ -59,6 +64,7 @@ public class ImprovedMovement : Movement {
         float y = Input.GetAxis("Vertical");
         float xRaw = Input.GetAxisRaw("Horizontal");
         float yRaw = Input.GetAxisRaw("Vertical");
+        //Saving non-zero movement
         if (xRaw != 0 || yRaw != 0) {
             xRawSaved = xRaw;
             yRawSaved = yRaw;
@@ -85,10 +91,12 @@ public class ImprovedMovement : Movement {
             GetComponent<BetterJumping>().enabled = true;
         }
 
+        //Jump Buffer Decrement
         if (jumpBuffer > -1) {
             jumpBuffer--;
         }
 
+        //Coyote Time and Jump usage
         if (coll.onGround) {
             coyoteBuffer = 12;
             if (jumpBuffer > -1) {
@@ -109,6 +117,7 @@ public class ImprovedMovement : Movement {
             rb.velocity = new Vector2(rb.velocity.x, y * (speed * speedModifier));
         }
         else {
+            //Feels Better
             rb.gravityScale = 4;
         }
 
@@ -125,6 +134,7 @@ public class ImprovedMovement : Movement {
         if (Input.GetButtonDown("Jump")) {
             anim.SetTrigger("jump");
 
+            //Coyote Time allowance and Jump Buffer setting
             if (coyoteBuffer > -1)
                 Jump(Vector2.up, false);
             else if (coll.onWall)
@@ -133,6 +143,7 @@ public class ImprovedMovement : Movement {
                 jumpBuffer = 12;
         }
 
+        //Consistent Dash
         if (Input.GetButtonDown("Fire2") && !hasDashed) {
             Dash(xRawSaved, yRawSaved);
         }
@@ -160,7 +171,8 @@ public class ImprovedMovement : Movement {
             anim.Flip(side);
         }
 
-
+        //Saving
+        prevXInput = dir.x;
     }
 
     void GroundTouch() {
@@ -180,11 +192,22 @@ public class ImprovedMovement : Movement {
         hasDashed = true;
 
         anim.SetTrigger("dash");
+        //Momentum Holder
+        var holder = Math.Abs(((int)rb.velocity.x));
+        if (holder < 5) {
+            holder = 1;
+        }
+        else {
+            holder = 2;
+        }
 
-        rb.velocity = Vector2.zero;
+        // New Dash
         Vector2 dir = new Vector2(x, y);
+        float speedX = dir.normalized.x * dashSpeed * holder;
+        float speedY = dir.normalized.y * dashSpeed * holder;
+        Vector2 speed = new Vector2(speedX, speedY);
+        rb.velocity = speed;
 
-        rb.velocity += dir.normalized * dashSpeed;
         StartCoroutine(DashWait());
     }
 
@@ -243,7 +266,8 @@ public class ImprovedMovement : Movement {
         }
         float push = pushingWall ? 0 : rb.velocity.x;
 
-        float newYVeloc = rb.velocity.y - (slideSpeed/72);
+        //Walls decelerate like gravity instead of instantly moving the player down
+        float newYVeloc = rb.velocity.y - (slideSpeed/144);
         if (newYVeloc < -slideSpeed) newYVeloc = -slideSpeed;
         rb.velocity = new Vector2(push, newYVeloc);
     }
@@ -256,9 +280,23 @@ public class ImprovedMovement : Movement {
             return;
 
         if (!wallJumped) {
-            rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
-        }
-        else {
+            //increase and decrease the players velocity quicker to make the movement more responsive
+            if ((Math.Abs(dir.x) < .90 && Math.Abs(dir.x) < Math.Abs(prevXInput)) || coll.onWall) {
+                if ((coll.onRightWall && dir.x > 0) || (coll.onLeftWall && dir.x < 0) || !coll.onWall)
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                else
+                    rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
+            }
+
+            else {
+                if (Math.Abs(dir.x) < .4 && dir.x != 0)
+                    rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .4 * speed), rb.velocity.y);
+                else if (Math.Abs(dir.x) < .7 && dir.x != 0)
+                    rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .7 * speed), rb.velocity.y);
+                else
+                    rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
+            }
+        } else {
             rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpLerp * Time.deltaTime);
         }
     }
