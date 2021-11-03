@@ -25,13 +25,11 @@ public class ImprovedMovement : Movement {
     //public bool wallJumped;
     //public bool wallSlide;
     //public bool isDashing;
-
-    [Space]
-
     private bool groundTouch;
     private bool hasDashed;
 
     public int side = 1;
+    private Color sColor;
 
     //Saved directional variables for consistent dashing
     private float xRawSaved = 1.0f;
@@ -51,11 +49,16 @@ public class ImprovedMovement : Movement {
     public ParticleSystem wallJumpParticle;
     public ParticleSystem slideParticle;
 
+    SpriteRenderer sprite;
+
     // Start is called before the first frame update
     void Start() {
         coll = GetComponent<Collision>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<AnimationScript>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
+        sColor = new Color(0.5f, 0.5f, 1f, 1f);
+        sprite.color = Color.white;
     }
 
     // Update is called once per frame
@@ -177,6 +180,7 @@ public class ImprovedMovement : Movement {
 
     void GroundTouch() {
         hasDashed = false;
+        sprite.color = Color.white;
         isDashing = false;
 
         side = anim.sr.flipX ? -1 : 1;
@@ -190,6 +194,7 @@ public class ImprovedMovement : Movement {
         FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
 
         hasDashed = true;
+        sprite.color = sColor;
 
         anim.SetTrigger("dash");
         //Momentum Holder
@@ -234,7 +239,10 @@ public class ImprovedMovement : Movement {
     IEnumerator GroundDash() {
         yield return new WaitForSeconds(.15f);
         if (coll.onGround)
+        {
             hasDashed = false;
+            sprite.color = Color.white;
+        }
     }
 
     private void WallJump() {
