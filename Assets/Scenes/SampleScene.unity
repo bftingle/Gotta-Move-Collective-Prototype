@@ -4635,7 +4635,7 @@ MonoBehaviour:
   speed: 7
   jumpForce: 14
   slideSpeed: 1
-  wallJumpLerp: 5
+  wallJumpLerp: 12
   dashSpeed: 30
   side: 1
   prevXInput: 0
