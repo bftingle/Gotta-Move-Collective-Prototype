@@ -25,7 +25,7 @@ public class ImprovedMovement : Movement {
     //public bool wallJumped;
     //public bool wallSlide;
     //public bool isDashing;
-    //test
+    //tests
     private bool groundTouch;
     private bool hasDashed;
 
