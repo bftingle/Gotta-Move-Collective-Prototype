@@ -2390,8 +2390,7 @@ MonoBehaviour:
   slideSpeed: 1
   wallJumpLerp: 12
   dashSpeed: 30
-  side: 1
-  prevXInput: 0
+  terminalVelocity: 10
   dashParticle: {fileID: 1020932615}
   jumpParticle: {fileID: 325445890}
   wallJumpParticle: {fileID: 1082218467}

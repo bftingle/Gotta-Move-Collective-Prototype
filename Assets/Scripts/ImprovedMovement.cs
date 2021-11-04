@@ -17,6 +17,7 @@ public class ImprovedMovement : Movement {
     public float slideSpeed = 5;
     public float wallJumpLerp = 10;
     public float dashSpeed = 20;
+    public float terminalVelocity = 10;
 
     [Space]
     [Header("Booleans")]
@@ -28,7 +29,7 @@ public class ImprovedMovement : Movement {
     private bool groundTouch;
     private bool hasDashed;
 
-    public int side = 1;
+    private int side = 1;
     private Color sColor;
 
     //Saved directional variables for consistent dashing
@@ -40,7 +41,10 @@ public class ImprovedMovement : Movement {
     private int jumpBuffer = 0;
 
     //Saved X for walk response
-    public float prevXInput = 0;
+    private float prevXInput = 0;
+
+    //Used for terminal velocity
+    private int vTemp = 1;
 
     [Space]
     [Header("Polish")]
@@ -160,6 +164,19 @@ public class ImprovedMovement : Movement {
             groundTouch = false;
         }
 
+        //Terminal Velocity
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            vTemp = 2;
+        } else
+        if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S))
+        {
+            vTemp = 1;
+        }
+        if(rb.velocity.y < (terminalVelocity * vTemp * -1) && !coll.onWall)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, terminalVelocity * vTemp * -1);
+        }
         WallParticle(y);
 
         if (wallGrab || wallSlide || !canMove)
