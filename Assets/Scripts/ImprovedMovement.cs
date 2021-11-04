@@ -198,13 +198,9 @@ public class ImprovedMovement : Movement {
 
         anim.SetTrigger("dash");
         //Momentum Holder
-        var holder = Math.Abs(((int)rb.velocity.x));
-        if (holder < 5) {
-            holder = 1;
-        }
-        else {
-            holder = 2;
-        }
+        Vector2 nonDownVelocity = rb.velocity.y < 0 ? new Vector2(rb.velocity.x, 0) : rb.velocity;
+        float holder = nonDownVelocity.magnitude * (1.5f/7.0f);
+        if (holder < 1) holder = 1;
 
         // New Dash
         Vector2 dir = new Vector2(x, y);

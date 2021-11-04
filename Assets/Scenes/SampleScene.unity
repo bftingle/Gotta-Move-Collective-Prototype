@@ -4636,7 +4636,7 @@ MonoBehaviour:
   jumpForce: 14
   slideSpeed: 1
   wallJumpLerp: 12
-  dashSpeed: 30
+  dashSpeed: 40
   side: 1
   prevXInput: 0
   dashParticle: {fileID: 786101203}
