@@ -25,10 +25,7 @@ public class ImprovedMovement : Movement {
     //public bool wallJumped;
     //public bool wallSlide;
     //public bool isDashing;
-<<<<<<< HEAD
     //tests
-=======
->>>>>>> parent of 93e1deb (Update ImprovedMovement.cs)
     private bool groundTouch;
     private bool hasDashed;
 
