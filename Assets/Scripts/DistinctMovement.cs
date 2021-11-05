@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class ImprovedMovement : Movement {
+public class DistinctMovement : Movement {
     private Collision coll;
     [HideInInspector]
     public Rigidbody2D rb;
@@ -154,16 +154,14 @@ public class ImprovedMovement : Movement {
         }
 
         //Terminal Velocity
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-        {
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) {
             vTemp = 2;
-        } else
-        if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S))
-        {
+        }
+        else
+        if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S)) {
             vTemp = 1;
         }
-        if(rb.velocity.y < (terminalVelocity * vTemp * -1) && !coll.onWall)
-        {
+        if (rb.velocity.y < (terminalVelocity * vTemp * -1) && !coll.onWall) {
             rb.velocity = new Vector2(rb.velocity.x, terminalVelocity * vTemp * -1);
         }
         WallParticle(y);
@@ -242,7 +240,7 @@ public class ImprovedMovement : Movement {
         anim.SetTrigger("dash");
         //Momentum Holder
         Vector2 nonDownVelocity = rb.velocity.y < 0 ? new Vector2(rb.velocity.x, 0) : rb.velocity;
-        float holder = nonDownVelocity.magnitude * (1.5f/7.0f);
+        float holder = nonDownVelocity.magnitude * (1.5f / 7.0f);
         if (holder < 1) holder = 1;
 
         // New Dash
@@ -277,8 +275,7 @@ public class ImprovedMovement : Movement {
 
     IEnumerator GroundDash() {
         yield return new WaitForSeconds(.15f);
-        if (coll.onGround)
-        {
+        if (coll.onGround) {
             hasDashed = false;
             sprite.color = Color.white;
         }
@@ -319,7 +316,7 @@ public class ImprovedMovement : Movement {
         float push = pushingWall ? 0 : rb.velocity.x;
 
         //Walls decelerate like gravity instead of instantly moving the player down
-        float newYVeloc = rb.velocity.y - (slideSpeed/144);
+        float newYVeloc = rb.velocity.y - (slideSpeed / 144);
         if (newYVeloc < -slideSpeed) newYVeloc = -slideSpeed;
         rb.velocity = new Vector2(push, newYVeloc);
     }
@@ -333,22 +330,18 @@ public class ImprovedMovement : Movement {
 
         if (!wallJumped) {
             //increase and decrease the players velocity quicker to make the movement more responsive
-            if ((Math.Abs(dir.x) < .90 && Math.Abs(dir.x) < Math.Abs(prevXInput)) || coll.onWall) {
-                if ((coll.onRightWall && dir.x > 0) || (coll.onLeftWall && dir.x < 0) || !coll.onWall)
+            if ((coll.onRightWall && dir.x > 0) || (coll.onLeftWall && dir.x < 0)) {
                     rb.velocity = new Vector2(0, rb.velocity.y);
-                else
-                    rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
-            }
-
-            else {
+            } else {
                 if (Math.Abs(dir.x) < .4 && dir.x != 0)
                     rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .4 * speed), rb.velocity.y);
                 else if (Math.Abs(dir.x) < .7 && dir.x != 0)
                     rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .7 * speed), rb.velocity.y);
-                else
+                else if (dir.x != 0)
                     rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
             }
-        } else {
+        }
+        else {
             rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpLerp * Time.deltaTime);
         }
     }

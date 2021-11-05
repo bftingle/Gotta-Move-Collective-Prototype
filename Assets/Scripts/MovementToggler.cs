@@ -9,6 +9,8 @@ public class MovementToggler : MonoBehaviour
     public void UseBase() {
         Behaviour script = player.GetComponent<ImprovedMovement>();
         if (script != null) script.enabled = false;
+        script = player.GetComponent<DistinctMovement>();
+        if (script != null) script.enabled = false;
         script = player.GetComponent<BaseMovement>();
         if (script != null) script.enabled = true;
         player.GetComponentInChildren<AnimationScript>().UseBase();
@@ -17,8 +19,20 @@ public class MovementToggler : MonoBehaviour
     public void UseImproved() {
         Behaviour script = player.GetComponent<BaseMovement>();
         if (script != null) script.enabled = false;
+        script = player.GetComponent<DistinctMovement>();
+        if (script != null) script.enabled = false;
         script = player.GetComponent<ImprovedMovement>();
         if (script != null) script.enabled = true;
         player.GetComponentInChildren<AnimationScript>().UseImproved();
+    }
+
+    public void UseDistinct() {
+        Behaviour script = player.GetComponent<BaseMovement>();
+        if (script != null) script.enabled = false;
+        script = player.GetComponent<ImprovedMovement>();
+        if (script != null) script.enabled = false;
+        script = player.GetComponent<DistinctMovement>();
+        if (script != null) script.enabled = true;
+        player.GetComponentInChildren<AnimationScript>().UseDistinct();
     }
 }

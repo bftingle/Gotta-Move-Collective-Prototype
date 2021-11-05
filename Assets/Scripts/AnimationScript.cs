@@ -67,4 +67,8 @@ public class AnimationScript : MonoBehaviour
     public void UseImproved() {
         move = GetComponentInParent<ImprovedMovement>();
     }
+
+    public void UseDistinct() {
+        move = GetComponentInParent<DistinctMovement>();
+    }
 }
