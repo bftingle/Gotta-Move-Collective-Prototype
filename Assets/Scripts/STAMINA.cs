@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class ImprovedMovement : Movement {
+public class STAMINA : Movement {
     private Collision coll;
     [HideInInspector]
     public Rigidbody2D rb;
