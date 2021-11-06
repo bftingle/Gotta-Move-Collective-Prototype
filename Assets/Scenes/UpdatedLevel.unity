@@ -2499,12 +2499,13 @@ MonoBehaviour:
   wallSlide: 0
   isDashing: 0
   rb: {fileID: 0}
-  speed: 7
-  jumpForce: 14
+  speed: 4
+  jumpForce: 8
   slideSpeed: 1
-  wallJumpLerp: 12
-  dashSpeed: 40
-  terminalVelocity: 10
+  wallJumpLerp: 6
+  dashSpeed: 25
+  terminalVelocity: 15
+  MaxClimbStamina: 300
   dashParticle: {fileID: 1020932615}
   jumpParticle: {fileID: 325445890}
   wallJumpParticle: {fileID: 1082218467}
