@@ -2454,7 +2454,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -2499,13 +2499,13 @@ MonoBehaviour:
   wallSlide: 0
   isDashing: 0
   rb: {fileID: 0}
-  speed: 9
-  jumpForce: 16
-  slideSpeed: 2
+  speed: 3
+  jumpForce: 7
+  slideSpeed: 1
   wallJumpLerp: 6
-  dashSpeed: 60
-  terminalVelocity: 20
-  MaxClimbStamina: 825
+  dashSpeed: 25
+  terminalVelocity: 15
+  MaxClimbStamina: 300
   dashParticle: {fileID: 1020932615}
   jumpParticle: {fileID: 325445890}
   wallJumpParticle: {fileID: 1082218467}
