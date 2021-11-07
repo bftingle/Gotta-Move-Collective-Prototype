@@ -333,7 +333,7 @@ public class DistinctMovement : Movement {
             if ((coll.onRightWall && dir.x > 0) || (coll.onLeftWall && dir.x < 0)) {
                     rb.velocity = new Vector2(0, rb.velocity.y);
             } else {
-                if (Math.Abs(dir.x) > .2 && Math.Abs(dir.x) < .6 && dir.x != 0)
+                if (Math.Abs(dir.x) < .6 && dir.x != 0)
                     rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .2 * speed), rb.velocity.y);
                 else if (Math.Abs(dir.x) > .6 && Math.Abs(dir.x) < .85 && dir.x != 0)
                     rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .5 * speed), rb.velocity.y);
