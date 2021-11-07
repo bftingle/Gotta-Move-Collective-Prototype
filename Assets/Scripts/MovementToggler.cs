@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MovementToggler : MonoBehaviour
 {
@@ -34,5 +35,13 @@ public class MovementToggler : MonoBehaviour
         script = player.GetComponent<DistinctMovement>();
         if (script != null) script.enabled = true;
         player.GetComponentInChildren<AnimationScript>().UseDistinct();
+    }
+
+    public void SampleScene() {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void UpdatedLevel() {
+        SceneManager.LoadScene("UpdatedLevel");
     }
 }
