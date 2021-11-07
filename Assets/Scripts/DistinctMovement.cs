@@ -12,8 +12,6 @@ public class DistinctMovement : Movement {
 
     [Space]
     [Header("Stats")]
-    public float speed = 10;
-    public float jumpForce = 50;
     public float slideSpeed = 5;
     public float wallJumpLerp = 10;
     public float dashSpeed = 20;
@@ -333,16 +331,10 @@ public class DistinctMovement : Movement {
             if ((coll.onRightWall && dir.x > 0) || (coll.onLeftWall && dir.x < 0)) {
                     rb.velocity = new Vector2(0, rb.velocity.y);
             } else {
-                if (Math.Abs(dir.x) < .4 && dir.x != 0)
-                    rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .4 * speed), rb.velocity.y);
-                else if (Math.Abs(dir.x) < .7 && dir.x != 0)
-                    rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .7 * speed), rb.velocity.y);
                 else if (dir.x != 0)
-                    rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
             }
         }
         else {
-            rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpLerp * Time.deltaTime);
         }
     }
 
