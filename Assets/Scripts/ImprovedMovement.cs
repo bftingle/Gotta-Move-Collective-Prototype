@@ -112,8 +112,7 @@ public class ImprovedMovement : Movement {
             rb.velocity = new Vector2(rb.velocity.x, y * (speed * speedModifier));
         }
         else {
-            //Feels Better
-            rb.gravityScale = 4;
+            rb.gravityScale = 3;
         }
 
         if (coll.onWall && !coll.onGround) {
