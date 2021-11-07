@@ -334,9 +334,9 @@ public class DistinctMovement : Movement {
                     rb.velocity = new Vector2(0, rb.velocity.y);
             } else {
                 if (Math.Abs(dir.x) < .4 && dir.x != 0)
+                    rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .2 * speed), rb.velocity.y);
+                else if (Math.Abs(dir.x) < 1 && dir.x != 0)
                     rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .4 * speed), rb.velocity.y);
-                else if (Math.Abs(dir.x) < .7 && dir.x != 0)
-                    rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .7 * speed), rb.velocity.y);
                 else if (dir.x != 0)
                     rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
             }
