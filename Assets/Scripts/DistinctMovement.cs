@@ -107,7 +107,7 @@ public class DistinctMovement : Movement {
             if (x > .2f || x < -.2f)
                 rb.velocity = new Vector2(rb.velocity.x, 0);
 
-            float speedModifier = y > 0 ? .5f : 1;
+            float speedModifier = y > 0 ? .25f : 1;
 
             rb.velocity = new Vector2(rb.velocity.x, y * (speed * speedModifier));
         }
@@ -230,7 +230,7 @@ public class DistinctMovement : Movement {
 
     private void Dash(float x, float y) {
         Camera.main.transform.DOComplete();
-        Camera.main.transform.DOShakePosition(.2f, .5f, 14, 90, false, true);
+        Camera.main.transform.DOShakePosition(.2f, 1.0f, 14, 90, false, true);
         FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
 
         hasDashed = true;
@@ -287,6 +287,12 @@ public class DistinctMovement : Movement {
         GetComponent<BetterJumping>().enabled = true;
         wallJumped = false;
         isDashing = false;
+
+        if (coll.onWall) {
+            Camera.main.transform.DOComplete();
+            Camera.main.transform.DOShakePosition(.2f, 1.0f, 14, 90, false, true);
+            FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
+        }
     }
 
     IEnumerator GroundDash() {
