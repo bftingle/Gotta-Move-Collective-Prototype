@@ -2503,7 +2503,7 @@ MonoBehaviour:
   jumpForce: 16
   slideSpeed: 2
   wallJumpLerp: 6
-  dashSpeed: 60
+  dashSpeed: 30
   terminalVelocity: 20
   MaxClimbStamina: 825
   dashParticle: {fileID: 1020932615}
@@ -25049,7 +25049,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 6
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -25082,9 +25082,8 @@ Tilemap:
   - m_RefCount: 2
     m_Data: {fileID: 7254766466508165149, guid: 0025273e33fd6e240b185fb45fe147b8,
       type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -2223224147836825558, guid: 0025273e33fd6e240b185fb45fe147b8,
-      type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 2
@@ -25094,8 +25093,9 @@ Tilemap:
   - m_RefCount: 2
     m_Data: {fileID: -4195006972398123391, guid: 0025273e33fd6e240b185fb45fe147b8,
       type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -2223224147836825558, guid: 0025273e33fd6e240b185fb45fe147b8,
+      type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -5711296819054529957, guid: 0025273e33fd6e240b185fb45fe147b8,
       type: 3}

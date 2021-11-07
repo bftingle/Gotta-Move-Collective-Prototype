@@ -244,15 +244,11 @@ public class DistinctMovement : Movement {
 
         // New Dash
         Vector2 dir = new Vector2(x, y);
-        float speedX = dir.normalized.x * dashSpeed * holder;
-        float speedY = dir.normalized.y * dashSpeed * holder;
-        Vector2 speed = new Vector2(speedX, speedY);
-        rb.velocity = speed;
 
-        StartCoroutine(DashWait());
+        StartCoroutine(DashWait(dir, holder));
     }
 
-    IEnumerator DashWait() {
+    IEnumerator DashWait(Vector2 dir, float holder) {
         FindObjectOfType<GhostTrail>().ShowGhost();
         StartCoroutine(GroundDash());
         DOVirtual.Float(14, 0, .8f, RigidbodyDrag);
@@ -263,7 +259,28 @@ public class DistinctMovement : Movement {
         wallJumped = true;
         isDashing = true;
 
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.05f);
+
+        float speedX = dir.normalized.x * dashSpeed * holder * 0.25f;
+        float speedY = dir.normalized.y * dashSpeed * holder * 0.25f;
+        Vector2 speed = new Vector2(speedX, speedY);
+        rb.velocity = speed;
+
+        yield return new WaitForSeconds(.05f);
+
+        speedX = dir.normalized.x * dashSpeed * holder * 0.50f;
+        speedY = dir.normalized.y * dashSpeed * holder * 0.50f;
+        speed = new Vector2(speedX, speedY);
+        rb.velocity = speed;
+
+        yield return new WaitForSeconds(.05f);
+
+        speedX = dir.normalized.x * dashSpeed * holder * 1.00f;
+        speedY = dir.normalized.y * dashSpeed * holder * 1.00f;
+        speed = new Vector2(speedX, speedY);
+        rb.velocity = speed;
+
+        yield return new WaitForSeconds(.05f);
 
         dashParticle.Stop();
         rb.gravityScale = 5;
