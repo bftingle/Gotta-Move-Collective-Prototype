@@ -338,11 +338,11 @@ public class DistinctMovement : Movement {
                 else if (Math.Abs(dir.x) > .6 && Math.Abs(dir.x) < .85 && dir.x != 0)
                     rb.velocity = new Vector2((float)(dir.x / Math.Abs(dir.x) * .5 * speed), rb.velocity.y);
                 else if (dir.x != 0)
-                    rb.velocity = new Vector2((float)(dir.x * .75 * speed), rb.velocity.y);
+                    rb.velocity = new Vector2((float)(dir.x * speed), rb.velocity.y);
             }
         }
         else {
-            rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2((float)(dir.x * speed * .75), rb.velocity.y)), wallJumpLerp * Time.deltaTime);
+            rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2((float)(dir.x * speed), rb.velocity.y)), wallJumpLerp * Time.deltaTime);
         }
     }
 
