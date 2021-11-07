@@ -112,7 +112,7 @@ public class DistinctMovement : Movement {
             rb.velocity = new Vector2(rb.velocity.x, y * (speed * speedModifier));
         }
         else {
-            rb.gravityScale = 3;
+            rb.gravityScale = 5;
         }
 
         if (coll.onWall && !coll.onGround) {
@@ -266,7 +266,7 @@ public class DistinctMovement : Movement {
         yield return new WaitForSeconds(.3f);
 
         dashParticle.Stop();
-        rb.gravityScale = 3;
+        rb.gravityScale = 5;
         GetComponent<BetterJumping>().enabled = true;
         wallJumped = false;
         isDashing = false;
@@ -349,10 +349,26 @@ public class DistinctMovement : Movement {
         slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
         ParticleSystem particle = wall ? wallJumpParticle : jumpParticle;
 
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.velocity += dir * jumpForce;
-
         particle.Play();
+
+        StartCoroutine(JumpWait(dir));
+    }
+
+    IEnumerator JumpWait(Vector2 dir) {
+        yield return new WaitForSeconds(.05f);
+
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.velocity += dir * jumpForce * 0.25f;
+
+        yield return new WaitForSeconds(.05f);
+
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.velocity += dir * jumpForce * 0.50f;
+
+        yield return new WaitForSeconds(.05f);
+
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.velocity += dir * jumpForce * 1.00f;
     }
 
     IEnumerator DisableMovement(float time) {
